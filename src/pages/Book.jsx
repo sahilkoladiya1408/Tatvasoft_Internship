@@ -3,19 +3,19 @@ import React from "react";
 
 const data = [
   {
-    title: "Ramayan",
-    price: 1999,
-    author: "Sage Valmiki",
+    title: "Book1",
+    price: 300,
+    author: "author1",
   },
   {
-    title: "Doglapan",
-    price: 299,
-    author: "Ashneer",
+    title: "Book2",
+    price: 400,
+    author: "author2",
   },
   {
-    title: "Rich Dad poor Dad",
+    title: "Book3",
     price: 200,
-    author: "Robert Kiyosaki",
+    author: "author3",
   },
 ];
 
