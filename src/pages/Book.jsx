@@ -27,9 +27,8 @@ const Book = () => {
       >
         {books.map((ele) => {
           return (
-            <Grid item md={3}>
+            <Grid item md={3} key={ele.name}>
               <BookCard
-                key={ele.name}
                 title={ele.name}
                 price={ele.price}
                 author={ele.category}

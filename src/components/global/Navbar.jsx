@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { RoutePaths } from "./../../utils/enum";
 import Shared from "../../utils/shared";
 import { useMemo } from "react";
+import { useAuthContext } from "../../context/auth";
 
 const linkStyle = {
   textDecoration: "none",
@@ -24,21 +25,16 @@ const Navbar = () => {
     gap: "20px",
   };
 
-  // temporary user
-  const user = {
-    id: "xyz",
-    roleId: 1,
-    name: "ramesh",
-  };
+  const authContext = useAuthContext();
 
   const items = useMemo(() => {
     return Shared.NavigationItems.filter(
-      (item) => !item.access.length || item.access.includes(user.roleId)
+      (item) => !item.access.length || item.access.includes(authContext.user.roleId)
     );
-  }, [user]);
+  }, [authContext.user]);
 
   const logOut = () => {
-    //authcontext se sign out karna hai
+    authContext.signOut();
   };
 
   return (
@@ -57,7 +53,7 @@ const Navbar = () => {
             spacing={1}
             divider={<Divider orientation="vertical" flexItem />}
           >
-            {!user.id && (
+            {!authContext.user.id && (
               <>
                 <Link to={RoutePaths.Login} style={linkStyle}>
                   <Button
@@ -112,7 +108,7 @@ const Navbar = () => {
               Cart
             </Button>
           </Link>
-          {user.id && (
+          {authContext.user.id && (
             <Link to="/book" style={linkStyle}>
               <Button
                 variant="text"
