@@ -20,21 +20,22 @@ import MainNavigation from "./components/global/MainNavigation";
 import { AuthWrapper } from "./context/auth";
 
 const App = () => {
-  return;
-  <BrowserRouter>
-    <AuthWrapper>
-      <div className="loader-wrapper">
-        <img src={loader} alt="loader" />
-      </div>
-      <AppWrapper>
-        <Navbar />
-        <SearchBar />
-        <MainNavigation />
-        <ToastContainer />
-        <Footer />
-      </AppWrapper>
-    </AuthWrapper>
-  </BrowserRouter>;
+  return (
+    <BrowserRouter>
+      <AuthWrapper>
+        <div className="loader-wrapper">
+          <img src={loader} alt="loader" />
+        </div>
+        <AppWrapper>
+          <Navbar />
+          <SearchBar />
+          <MainNavigation />
+          <ToastContainer />
+          <Footer />
+        </AppWrapper>
+      </AuthWrapper>
+    </BrowserRouter>
+  );
 };
 
 export default App;

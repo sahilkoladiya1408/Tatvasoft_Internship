@@ -29,7 +29,8 @@ const Navbar = () => {
 
   const items = useMemo(() => {
     return Shared.NavigationItems.filter(
-      (item) => !item.access.length || item.access.includes(authContext.user.roleId)
+      (item) =>
+        !item.access.length || item.access.includes(authContext.user.roleId)
     );
   }, [authContext.user]);
 
@@ -114,7 +115,7 @@ const Navbar = () => {
                 variant="text"
                 color="error"
                 sx={{ textTransform: "capitalize" }}
-                onClick={() => logOut}
+                onClick={logOut}
               >
                 Logout
               </Button>

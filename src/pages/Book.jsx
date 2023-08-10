@@ -19,7 +19,7 @@ const Book = () => {
 
   return (
     <Container maxWidth="lg" sx={{ paddingY: "1rem" }}>
-      <Grid
+      {/* <Grid
         container
         rowSpacing={1}
         columnSpacing={{ xs: 1, sm: 2, md: 5 }}
@@ -27,7 +27,7 @@ const Book = () => {
       >
         {books.map((ele) => {
           return (
-            <Grid item md={3} key={ele.name}>
+            <Grid item md={3} sx={{ alignItems: "center" }} key={ele.name}>
               <BookCard
                 title={ele.name}
                 price={ele.price}
@@ -37,7 +37,8 @@ const Book = () => {
             </Grid>
           );
         })}
-      </Grid>
+      </Grid> */}
+      Book Page
     </Container>
   );
 };
