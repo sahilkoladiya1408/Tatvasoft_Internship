@@ -6,67 +6,60 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { FormHelperText } from "@mui/material";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import authService from "../services/auth.service";
 import { useNavigate } from "react-router-dom";
+
 const initialValues = {
   firstName: "",
   lastName: "",
   email: "",
-  roleId: 2,
+  roleId: 3,
   password: "",
   confirmPassword: "",
 };
-
 
 const roleList = [
   { id: 2, name: "buyer" },
   { id: 3, name: "seller" },
 ];
 
-
 const registerSchema = Yup.object({
-  firstName: Yup.string().min(2).max(25).required("please enter your first name"),
+  firstName: Yup.string()
+    .min(2)
+    .max(25)
+    .required("please enter your first name"),
   lastName: Yup.string().min(2).max(25).required("please enter your last name"),
   email: Yup.string().email().required("Please enter your email"),
-  password: Yup.string().min(6).required("Please enter password with min 6 char"),
+  password: Yup.string()
+    .min(6)
+    .required("Please enter password with min 6 char"),
   confirmPassword: Yup.string()
     .required()
     .oneOf([Yup.ref("password"), null], "Password must match"),
-    roleId: Yup.number().required("Role is required"),
+  roleId: Yup.number().required("Role is required"),
 });
 
 const Register = () => {
+  const navigate = useNavigate();
 
-const navigate=useNavigate();
-
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: initialValues,
-    validationSchema:registerSchema,
-    onSubmit: (values) => {
-      // console.log("form vals", values);
-      // alert("sucessfull");
-      delete values.confirmPassword;
-      authService.create(values).then((res) => {
-        navigate("/login");
-        toast.success("Successfully registered");
-      });
-    },
-  });
-
-  // const onSubmit = (data) => {
-  //   delete data.confirmPassword;
-  //   authService.create(data).then((res) => {
-  //     navigate("/login");
-  //     toast.success("Successfully registered");
-  //   });
-  // };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: registerSchema,
+      onSubmit: (values) => {
+        delete values.confirmPassword;
+        authService.create(values).then((res) => {
+          navigate("/login");
+          toast.success("Successfully registered");
+        });
+      },
+    });
 
   return (
-    <Container maxWidth="lg" sx={{margin:"1.5rem auto"}}>
+    <Container maxWidth="lg" sx={{ margin: "1.5rem auto" }}>
       <form onSubmit={handleSubmit}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <Typography
@@ -98,10 +91,13 @@ const navigate=useNavigate();
                   value={values.firstName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  helperText={errors.firstName && touched.firstName ? errors.firstName :null}
+                  helperText={
+                    errors.firstName && touched.firstName
+                      ? errors.firstName
+                      : null
+                  }
                   error={errors.firstName && touched.firstName}
                 />
-              
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="body1" gutterBottom>
@@ -115,7 +111,9 @@ const navigate=useNavigate();
                   value={values.lastName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  helperText={errors.lastName && touched.lastName ? errors.lastName :null}
+                  helperText={
+                    errors.lastName && touched.lastName ? errors.lastName : null
+                  }
                   error={errors.lastName && touched.lastName}
                 />
               </Grid>
@@ -131,11 +129,13 @@ const navigate=useNavigate();
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  helperText={errors.email && touched.email ? errors.email :null}
+                  helperText={
+                    errors.email && touched.email ? errors.email : null
+                  }
                   error={errors.email && touched.email}
                 />
               </Grid>
-              <Grid item xs={6} >
+              <Grid item xs={6}>
                 <Typography variant="body1" gutterBottom>
                   Role *
                 </Typography>
@@ -146,20 +146,15 @@ const navigate=useNavigate();
                   name="roleId"
                   size="small"
                   fullWidth
-                 displayEmpty
+                  displayEmpty
                 >
                   {roleList.length > 0 &&
-                                roleList.map((role) => (
-                                  <MenuItem
-                                    value={role.id}
-                                    key={"name" + role.id}
-                                  >
-                                    {role.name}
-                                  </MenuItem>
-                                ))}
+                    roleList.map((role) => (
+                      <MenuItem value={role.id} key={"name" + role.id}>
+                        {role.name}
+                      </MenuItem>
+                    ))}
                 </Select>
-                
-                
               </Grid>
             </Grid>
           </Box>
@@ -182,7 +177,9 @@ const navigate=useNavigate();
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  helperText={errors.password && touched.password ? errors.password :null}
+                  helperText={
+                    errors.password && touched.password ? errors.password : null
+                  }
                   error={errors.password && touched.password}
                 />
               </Grid>
@@ -198,7 +195,11 @@ const navigate=useNavigate();
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  helperText={errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword :null}
+                  helperText={
+                    errors.confirmPassword && touched.confirmPassword
+                      ? errors.confirmPassword
+                      : null
+                  }
                   error={errors.confirmPassword && touched.confirmPassword}
                 />
               </Grid>
