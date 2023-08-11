@@ -16,14 +16,15 @@ const initialValues = {
   firstName: "",
   lastName: "",
   email: "",
-  roleId: 3,
+  roleId: 2,
   password: "",
   confirmPassword: "",
 };
 
 const roleList = [
-  { id: 2, name: "buyer" },
-  { id: 3, name: "seller" },
+  { id: 1, name: "admin" },
+  { id: 2, name: "seller" },
+  { id: 3, name: "buyer" },
 ];
 
 const registerSchema = Yup.object({
