@@ -3,6 +3,8 @@ import { RoutePaths } from "../../utils/enum";
 import Home from "../../pages/Home";
 import Register from "../../pages/Register";
 import Login from "../../pages/Login";
+import User from "../../pages/User";
+import EditUser from "../../pages/EditUser";
 import Book from "../../pages/Book";
 import BookListing from "../../pages/BookListing";
 import EditBook from "../../pages/EditBook";
@@ -29,7 +31,7 @@ const MainNavigation = () => {
       />
       <Route
         exact
-        path={RoutePaths.Home}
+        path={RoutePaths.BookListing}
         element={authContext.user.id ? <BookListing /> : Redirect}
       />
       <Route
@@ -53,6 +55,16 @@ const MainNavigation = () => {
             <Navigate to={RoutePaths.Book} />
           )
         }
+      />
+      <Route
+        exact
+        path={RoutePaths.User}
+        element={authContext.user.id ? <User /> : Redirect}
+      />
+      <Route
+        exact
+        path={RoutePaths.EditUser}
+        element={authContext.user.id ? <EditUser /> : Redirect}
       />
       <Route
         exact
