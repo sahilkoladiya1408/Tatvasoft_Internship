@@ -3,7 +3,14 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
-import { List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import {
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 import bookService from "../../services/book.service";
@@ -51,7 +58,7 @@ const SearchBar = () => {
           type="text"
           placeholder="What are you looking for ..."
           size="small"
-          sx={{ width: "422px" }}
+          sx={{ width: "422px", zIndex: 20, backgroundColor: "#fafafa" }}
           value={query}
           onChange={(e) => setquery(e.target.value)}
         />
@@ -60,6 +67,7 @@ const SearchBar = () => {
           sx={{
             textTransform: "capitalize",
             backgroundColor: "#80bf32",
+            zIndex: 20,
             "&:hover": {
               backgroundColor: "#339933",
             },
@@ -90,18 +98,27 @@ const SearchBar = () => {
                 bookList.map((item, i) => {
                   return (
                     <ListItem sx={{ display: "flex" }} key={item.name}>
-                      <Stack sx={{ flexGrow: "1" }}>
+                      <Box sx={{ flexGrow: "1" }}>
                         <Typography variant="h6">{item.name}</Typography>
                         <Typography variant="body1">
                           {item.description}
                         </Typography>
-                      </Stack>
-                      <Stack direction="row" spacing={4}>
-                        <Typography variant="h6">Rs. {item.price}</Typography>
+                      </Box>
+                      <Box
+                        spacing={4}
+                        sx={{
+                          display: "flex",
+                          gap: "1rem",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography variant="h6" sx={{ width: "100px" }}>
+                          ₹ {item.price}
+                        </Typography>
                         <Button variant="contained" onClick={() => {}}>
                           Add to Cart
                         </Button>
-                      </Stack>
+                      </Box>
                     </ListItem>
                   );
                 })}

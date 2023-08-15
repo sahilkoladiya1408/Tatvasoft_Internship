@@ -20,11 +20,6 @@ const linkStyle = {
 };
 
 const Navbar = () => {
-  const Style = {
-    display: "flex",
-    gap: "20px",
-  };
-
   const authContext = useAuthContext();
 
   const items = useMemo(() => {
@@ -47,7 +42,13 @@ const Navbar = () => {
           height: "92px",
         }}
       >
-        <img src={logo} alt="logo" style={{ width: "180px" }} />
+        <Link to={RoutePaths.Home}>
+          <img
+            src={logo}
+            alt="logo"
+            style={{ width: "230px", marginTop: "15px" }}
+          />
+        </Link>
         <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <Stack
             direction="row"

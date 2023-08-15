@@ -101,7 +101,12 @@ const BookListing = () => {
 
   return (
     <Container maxWidth="lg" sx={{ paddingY: "1rem" }}>
-      <Typography variant="h3" sx={{ textAlign: "center" }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        style={{ fontWeight: 600 }}
+        textAlign="center"
+      >
         Book Listing
       </Typography>
 
@@ -151,7 +156,7 @@ const BookListing = () => {
       >
         {books.map((ele) => {
           return (
-            <Grid item sm={12} md={4} key={ele.name}>
+            <Grid item sm={12} md={4} key={ele.id}>
               <BookCard
                 name={ele.name}
                 price={ele.price}
