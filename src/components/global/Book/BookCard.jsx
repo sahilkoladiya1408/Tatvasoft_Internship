@@ -1,13 +1,27 @@
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box, Chip, Stack } from "@mui/material";
+import { toast } from "react-toastify";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import shared from "../../../utils/shared";
+import { useAuthContext } from "../../../context/auth";
+import { useCartContext } from "../../../context/cart";
 
-const BookCard = ({ name, price, description, category, img }) => {
+const BookCard = ({ book }) => {
+  const authContext = useAuthContext();
+  const cartContext = useCartContext();
+
+  const addToCart = (book) => {
+    shared.addToCart(book, authContext.user.id).then((res) => {
+      if (res.error) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+        cartContext.updateCart();
+      }
+    });
+  };
+
   return (
     <Box
       sx={{
@@ -31,7 +45,7 @@ const BookCard = ({ name, price, description, category, img }) => {
         }}
       >
         <img
-          src={img}
+          src={book.base64image}
           alt="book image"
           style={{ height: "12rem", objectFit: "cover" }}
         />
@@ -46,15 +60,16 @@ const BookCard = ({ name, price, description, category, img }) => {
           width: "100%",
         }}
       >
-        <Typography variant="h5">{name}</Typography>
-        <Chip label={category} sx={{ backgroundColor: "#e0e8eb" }} />
+        <Typography variant="h5">{book.name}</Typography>
+        <Chip label={book.category} sx={{ backgroundColor: "#e0e8eb" }} />
 
         <Typography variant="body2" color="text.secondary">
-          {description}
+          {book.description}
         </Typography>
-        <Typography variant="h6">&#8377; {price}</Typography>
+        <Typography variant="h6">&#8377; {book.price}</Typography>
         <Button
           variant="contained"
+          onClick={() => addToCart(book)}
           startIcon={<ShoppingCartIcon />}
           sx={{
             marginTop: "auto",

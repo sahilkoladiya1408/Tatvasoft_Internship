@@ -1,6 +1,5 @@
 import { RoutePaths } from "../../utils/enum";
 
-import Home from "../../pages/Home";
 import Register from "../../pages/Register";
 import Login from "../../pages/Login";
 import User from "../../pages/User";
@@ -10,6 +9,7 @@ import BookListing from "../../pages/BookListing";
 import EditBook from "../../pages/EditBook";
 import Category from "../../pages/Category";
 import EditCategory from "../../pages/EditCategory";
+import Cart from "../../pages/Cart";
 import Profile from "../../pages/Profile";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "../../context/auth";
@@ -22,6 +22,11 @@ const MainNavigation = () => {
     <Routes>
       <Route exact path={RoutePaths.Register} element={<Register />} />
       <Route exact path={RoutePaths.Login} element={<Login />} />
+      <Route
+        exact
+        path={RoutePaths.BookListing}
+        element={authContext.user.id ? <BookListing /> : Redirect}
+      />
       <Route
         exact
         path={RoutePaths.Category}
@@ -49,11 +54,6 @@ const MainNavigation = () => {
       />
       <Route
         exact
-        path={RoutePaths.BookListing}
-        element={authContext.user.id ? <BookListing /> : Redirect}
-      />
-      <Route
-        exact
         path={RoutePaths.EditBook}
         element={
           authContext.user.roleId !== 3 ? (
@@ -73,6 +73,11 @@ const MainNavigation = () => {
             <Navigate to={RoutePaths.Book} />
           )
         }
+      />
+      <Route
+        exact
+        path={RoutePaths.Cart}
+        element={authContext.user.id ? <Cart /> : Redirect}
       />
       <Route
         exact

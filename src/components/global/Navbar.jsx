@@ -14,6 +14,8 @@ import { RoutePaths } from "./../../utils/enum";
 import Shared from "../../utils/shared";
 import { useMemo } from "react";
 import { useAuthContext } from "../../context/auth";
+import { useCartContext } from "../../context/cart";
+import { Chip } from "@mui/material";
 
 const linkStyle = {
   textDecoration: "none",
@@ -21,6 +23,9 @@ const linkStyle = {
 
 const Navbar = () => {
   const authContext = useAuthContext();
+  const cartContext = useCartContext();
+  console.log(cartContext.cartData.length);
+  console.log(cartContext.cartData);
 
   const items = useMemo(() => {
     return Shared.NavigationItems.filter(
@@ -42,14 +47,24 @@ const Navbar = () => {
           height: "92px",
         }}
       >
-        <Link to={RoutePaths.Home}>
-          <img
-            src={logo}
-            alt="logo"
-            style={{ width: "230px", marginTop: "15px" }}
-          />
+        <Link
+          to={RoutePaths.BookListing}
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <img src={logo} alt="logo" style={{ width: "180px" }} />
         </Link>
+
         <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          {!!authContext.user.id && (
+            <Chip
+              label={`Welcome, ${authContext.user.firstName} ${authContext.user.lastName}`}
+              sx={{
+                backgroundColor: "#e88504",
+                fontSize: "16px",
+                color: "#fff",
+              }}
+            />
+          )}
           <Stack
             direction="row"
             spacing={1}
@@ -90,23 +105,16 @@ const Navbar = () => {
                 </Link>
               );
             })}
-            {/* <Link to="/book" style={linkStyle}>
-              <Button
-                variant="text"
-                color="error"
-                sx={{ textTransform: "capitalize" }}
-              >
-                Books
-              </Button>
-            </Link> */}
           </Stack>
-          <Link to="/cart" style={linkStyle}>
+          <Link to={RoutePaths.Cart} style={linkStyle}>
             <Button
               variant="outlined"
               color="error"
               startIcon={<ShoppingCartIcon style={{ color: "#c62828" }} />}
             >
-              <span style={{ color: "#c62828", marginRight: "5px" }}>0</span>
+              <span style={{ color: "#c62828", marginRight: "5px" }}>
+                {cartContext.cartData.length}
+              </span>
               Cart
             </Button>
           </Link>

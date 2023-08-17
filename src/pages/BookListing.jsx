@@ -1,5 +1,4 @@
 import BookCard from "../components/global/Book/BookCard";
-import Stack from "@mui/material/Stack";
 
 import bookService from "../services/book.service";
 import categoryService from "../services/category.service";
@@ -55,7 +54,7 @@ const BookListing = () => {
     await categoryService.getAll().then((res) => {
       if (res) {
         setCategories(res);
-        console.log(res);
+        // console.log(res);
       }
     });
   };
@@ -93,10 +92,6 @@ const BookListing = () => {
       return 0;
     });
     setBookResponse({ ...bookResponse, items: bookList });
-  };
-
-  const filterByCategory = (e) => {
-    setCategory(parseInt(e.target.value));
   };
 
   return (
@@ -156,14 +151,8 @@ const BookListing = () => {
       >
         {books.map((ele) => {
           return (
-            <Grid item sm={12} md={4} key={ele.id}>
-              <BookCard
-                name={ele.name}
-                price={ele.price}
-                category={ele.category}
-                description={ele.description}
-                img={ele.base64image}
-              />
+            <Grid item sm={12} md={4} key={`card-${ele.id}`}>
+              <BookCard book={ele} />
             </Grid>
           );
         })}

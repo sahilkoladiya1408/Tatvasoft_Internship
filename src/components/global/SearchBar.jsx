@@ -3,21 +3,20 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
-import {
-  Container,
-  List,
-  ListItem,
-  ListItemText,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { Link } from "react-router-dom";
+import { List, ListItem, Typography } from "@mui/material";
+
+import { useAuthContext } from "../../context/auth";
+import { useCartContext } from "../../context/cart";
+import Shared from "../../utils/shared";
+import { toast } from "react-toastify";
 
 import bookService from "../../services/book.service";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const SearchBar = () => {
-  const open = false;
+  const authContext = useAuthContext();
+  const cartContext = useCartContext();
+
   const [query, setquery] = useState("");
   const [bookList, setbookList] = useState([]);
   const [openSearchResult, setOpenSearchResult] = useState(false);
@@ -33,6 +32,22 @@ const SearchBar = () => {
     setOpenSearchResult(true);
   };
 
+  const addToCart = (book) => {
+    if (!authContext.user.id) {
+      navigate(RoutePaths.Login);
+      toast.error("Please login before adding books to cart");
+    } else {
+      Shared.addToCart(book, authContext.user.id).then((res) => {
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          toast.success("Item added in cart");
+          cartContext.updateCart();
+        }
+      });
+    }
+  };
+
   return (
     <>
       <div
@@ -40,6 +55,8 @@ const SearchBar = () => {
         onClick={() => {
           setOpenSearchResult(false);
           document.body.classList.remove("search-results-open");
+          setbookList([]);
+          setquery("");
         }}
       ></div>
       <Box
@@ -84,9 +101,10 @@ const SearchBar = () => {
               position: "absolute",
               top: "70px",
               backgroundColor: "#dedede",
-              width: "75%",
+              width: "70%",
               zIndex: 2,
               borderRadius: "0.5rem",
+              boxShadow: 3,
             }}
           >
             {bookList?.length === 0 && (
@@ -97,7 +115,20 @@ const SearchBar = () => {
               {bookList?.length > 0 &&
                 bookList.map((item, i) => {
                   return (
-                    <ListItem sx={{ display: "flex" }} key={item.name}>
+                    <ListItem
+                      sx={{
+                        display: "flex",
+                        gap: "10px",
+                        "&:hover": {
+                          backgroundColor: "#fef7e7",
+                        },
+                      }}
+                      key={item.name}
+                    >
+                      <img
+                        src={item.base64image}
+                        style={{ width: "3rem", height: "5rem" }}
+                      />
                       <Box sx={{ flexGrow: "1" }}>
                         <Typography variant="h6">{item.name}</Typography>
                         <Typography variant="body1">
@@ -115,7 +146,18 @@ const SearchBar = () => {
                         <Typography variant="h6" sx={{ width: "100px" }}>
                           ₹ {item.price}
                         </Typography>
-                        <Button variant="contained" onClick={() => {}}>
+                        <Button
+                          variant="contained"
+                          startIcon={<ShoppingCartIcon />}
+                          sx={{
+                            marginTop: "auto",
+                            backgroundColor: "#ea3c53",
+                            "&:hover": {
+                              backgroundColor: "#e60026",
+                            },
+                          }}
+                          onClick={() => addToCart(item)}
+                        >
                           Add to Cart
                         </Button>
                       </Box>
