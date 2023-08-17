@@ -4,9 +4,7 @@ import { useAuthContext } from "./auth";
 
 const initialCartDetails = {
   cartData: [],
-  updateCart: () => {
-    console.log("sfuiuifurugrui"); //ayasudhi ave che cool ma nechenu main function nahi avtu
-  },
+  updateCart: () => {},
   emptyCart: () => {},
 };
 

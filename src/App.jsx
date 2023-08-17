@@ -18,6 +18,7 @@ import loader from "./assets/images/loader.gif";
 
 import MainNavigation from "./components/global/MainNavigation";
 import { AuthWrapper } from "./context/auth";
+import { CartWrapper } from "./context/cart";
 
 const App = () => {
   return (
@@ -27,11 +28,13 @@ const App = () => {
           <img src={loader} alt="loader" />
         </div>
         <AppWrapper>
-          <Navbar />
-          <SearchBar />
-          <MainNavigation />
-          <ToastContainer />
-          <Footer />
+          <CartWrapper>
+            <Navbar />
+            <SearchBar />
+            <MainNavigation />
+            <ToastContainer />
+            <Footer />
+          </CartWrapper>
         </AppWrapper>
       </AuthWrapper>
     </BrowserRouter>
